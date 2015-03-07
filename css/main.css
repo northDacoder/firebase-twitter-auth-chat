@@ -1,15 +1,20 @@
 @font-face {
   font-family: 'Gotham Light';
-  src: url("/fonts/Gotham-Light.otf") format("opentype");
+  src: url("../fonts/Gotham-Light.otf") format("opentype");
 }
 
 @font-face {
   font-family: 'Gotham Bold';
-  src: url("/fonts/Gotham-Bold.otf") format("opentype");
+  src: url("../fonts/Gotham-Bold.otf") format("opentype");
 }
 
 body {
 	font-family: 'Gotham Light';
+}
+
+.row#header {
+    margin-top: 40px;
+    margin-bottom: 30px;
 }
 
 h1 {
@@ -18,37 +23,36 @@ h1 {
 
 #stream {
 	display: inline-block;
+    margin-bottom: 40px;
 }
 
 .msg-text {
-	padding: 6px;
-	border-radius: 5px;
+	padding: 16px;
+	border-radius: 4px;
 	width: 350px;
-	margin: 15px;
 }
 
 .msg-text:hover {
 	background-color: #50b1ff;
 	color: #fff;
 	border: none;
+    box-shadow: 0 0 2px rgba(0,0,0,.2);
 }
 
 #login {
-	float: right;
 	padding: 0.5em 1em;
-	background-color: lightgrey;
+	background-color: #333;
 	border: none;
-	color: black;
+	color: #eee;
 	font-family: 'HelveticaNeue-Light';
 	font-weight: normal;
 	text-decoration: none;
-	border-radius: 5px;
+	border-radius: 4px;
 	font-size: 18px;
-	margin: -3px 40px 0px 0px;
 }
 
 #login:hover {
-	background-color: #f0f0f0;
+	background-color: black;
 }
 
 #login img {
@@ -58,34 +62,32 @@ h1 {
 
 #msgInput {
 	padding: 1em;
-	border: 1px solid #ccc;
 	height: 25px;
 	font-size: 14px;
 	font-family: 'HelveticaNeue-Light';
-	border-radius: 5px;
+    border-radius: 0;
+    height: 40px;
+    border: 2px solid #ccc;
+}
+
+#msgInput:hover {
+    border: 2px solid #50b1ff;
 }
 
 #tweet-submit {
-	padding: 0.5em 1em;
 	background-color: #50b1ff;
-	border: none;
 	-webkit-transition: background-color 300ms;
 	transition: background-color 300ms;
 	color: #FFF;
 	font-family: 'HelveticaNeue-Light';
 	font-weight: normal;
 	font-size: 14px;
-	border-radius: 5px;
+    height: 40px;
+    width: 100%;
 }
 
 #tweet-submit:hover {
 	cursor: pointer;
-}
-
-#here {
-	width: 50%;
-	margin-left: 15px;
-	float: right;
 }
 
 #user {
@@ -94,7 +96,8 @@ h1 {
 }
 
 #user img {
-	border-radius: 5px;
+	border-radius: 50%;
+    border: 2px solid #50b1ff;
 }
 
 #username {

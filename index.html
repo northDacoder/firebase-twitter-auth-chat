@@ -1,43 +1,70 @@
 <html>
 <head>
-    <title>Firebase Chat Example</title>
+    <title>ng-conf-extended @ Target</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One|Source+Sans+Pro:200,400,900|Nixie+One|Josefin+Sans:300,400|Raleway:400,900|Roboto:400,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="css/theme.css" type="text/css">-->
+
     <script src="https://cdn.firebase.com/js/client/2.0.2/firebase.js"></script>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
-    <link rel="stylesheet" href="css/main.css"></link>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+
 </head>
 <body>
 
-<div id="stream">
-	<h1>Firebase Chat</h1>
-	<input type="text" id="msgInput" placeholder="Your Message..."/>
-    <button type="submit" id="tweet-submit">Submit</button>
-    <div id="msg-box"></div>
+<div class="container">
+    <div class="row" id="header">
+        <div class="col-sm-3 col-sm-offset-1">
+            <a href="#" id="login" class="btn btn-block"><img src="twitter.png"/>Sign in With Twitter</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            <div id="stream">
+            	<h1 class="text-center">ng-conf-chat</h1>
+                <div class="form-group">
+        	       <input type="text" class="input-lg input-block form-control" id="msgInput" placeholder="Your Message..."/>
+               </div>
+               <div class="form-group">
+                   <button type="submit" class="btn btn-block" id="tweet-submit">Submit</button>
+                </div>
+                <div id="msg-box"></div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-sm-offset-1">
+            <div id="here" class="row">
+                <h1 class="text-center">Who's here?!</h1>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="here">
-<h1>Who's here?!<a href="#" id="login"><img src="twitter.png"/>Sign in With Twitter</a></h1>
-</div>
+
 <script>
-
-//STEP 1
-var ref = new Firebase("https://<YOUR-FIREASE-NAME>.firebaseio.com/");
+var ref = new Firebase("https://chatty-rooms.firebaseio.com/");
 var messagesRef = ref.child('messages');
 var usersRef = ref.child('users');
 var currentUser = null;
 
-//STEP 2
 	$('#login').on("click", function () {
 		authenticate();
 	});
 
-//STEP 3
 var authenticate = function() {
 	usersRef.authWithOAuthPopup('twitter', function (error, user) {
 		if (error) {
 			console.log(error);
 		} else if (user) {
+            console.log(user);
 			usersRef.child(user.uid).set({username: user.twitter.username, pic: user.twitter.cachedUserProfile.profile_image_url_https});
-		}
+
+	    }
 	});
 };
 	//Save user's auth state
@@ -45,13 +72,11 @@ var authenticate = function() {
 		currentUser = user;
 	});
 
-//STEP 4: Display a list of users who have logged in
 usersRef.on('child_added', function (snapshot) {
   var user = snapshot.val();
   $("<div id='user'><img src=" + user.pic + "/><span id='username'>@" + user.username + "</span></div>").appendTo($('#here'));
 });
 
-//STEP 5: Store messages in Firebase
 $('#tweet-submit').on('click', function () {
   if (currentUser !== null) {
     var message = $('#msgInput').val();
@@ -63,14 +88,23 @@ $('#tweet-submit').on('click', function () {
   }
 });
 
-//STEP 6: Add messages to DOM in realtime
 messagesRef.orderByChild("published").on('child_added', function (snapshot) {
+  var messages = $("#msg-box");
   var message = snapshot.val();
-    $('#msg-box').prepend($("<div class='msg-text'>").text(message.username).append('<br/>').append($('<span/>').text(message.message)));
-});
+  var username = message.username;
+  var tweet = message.message;
 
+  var html = '<div class="msg-text">' +
+                '<strong>' + username + '</strong>' +
+                '<br>' + tweet + '<br><br>' +
+             '</div>';
+
+
+  messages.append(html);
+
+    // $('#msg-box').prepend($("<div class='msg-text'>").text(message.username).append('<br/>').append($('<span/>').text(message.message)));
+});
 
 </script>
 </body>
-
 </html>

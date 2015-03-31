@@ -1,15 +1,5 @@
-@font-face {
-  font-family: 'Gotham Light';
-  src: url("../fonts/Gotham-Light.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'Gotham Bold';
-  src: url("../fonts/Gotham-Bold.otf") format("opentype");
-}
-
 body {
-	font-family: 'Gotham Light';
+    font-family: 'Nixie One', sans-serif;
 }
 
 .row#header {
@@ -18,7 +8,7 @@ body {
 }
 
 h1 {
-	font-family: 'Gotham Bold';
+    font-family: 'Nixie One', sans-serif;
 }
 
 #stream {
